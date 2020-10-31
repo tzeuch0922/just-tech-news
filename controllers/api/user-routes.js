@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const withAuth = require('../../utils/auth.js');
 const { User, Post, Vote, Comment } = require('../../models');
 
 // GET /api/users
@@ -131,7 +132,7 @@ router.post('/login', (req, res) =>
     });  
 });
 
-router.post('/logout', (req, res) =>
+router.post('/logout', withAuth, (req, res) =>
 {
     if(req.session.loggedIn)
     {
@@ -147,7 +148,7 @@ router.post('/logout', (req, res) =>
 });
 
 // PUT /api/users/1
-router.put('/:id', (req, res) =>
+router.put('/:id', withAuth, (req, res) =>
 {
     User.update(req.body, 
     {
@@ -174,7 +175,7 @@ router.put('/:id', (req, res) =>
 });
 
 // DELETE /api/users/1
-router.delete('/:id', (req, res) =>
+router.delete('/:id', withAuth, (req, res) =>
 {
     User.destroy(
     {
